@@ -1,6 +1,12 @@
-# nuxt-test
+# Code Ministry
 
-> My luminous Nuxt.js project
+> The codeministry.org web application
+
+### Built with
+
+- nuxt
+- hapi
+- Prismic CMS
 
 ## Build Setup
 
