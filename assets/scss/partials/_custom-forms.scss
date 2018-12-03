@@ -1,0 +1,13 @@
+.custom-select {
+  border: 0;
+  border-left: $input-btn-border-width solid $input-border-color;
+  &::placeholder {
+    font-style: italic;
+  }
+  &:focus {
+    border-left: $input-btn-border-width solid $input-border-color;
+  }
+  &:disabled::placeholder {
+    opacity: 0.5;
+  }
+}

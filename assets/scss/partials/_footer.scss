@@ -1,0 +1,50 @@
+#footer .section:first-child {
+  font-size: $o-footer-font-size;
+  color: $o-footer-color;
+  background-color: $o-footer-bg;
+  a {
+    color: $o-footer-link-color;
+    &:hover {
+      color: $o-footer-link-hover-color;
+    }
+  }
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: $o-footer-headings-color;
+  }
+  .text-muted {
+    color: $o-footer-muted-color !important;
+    &:hover {
+      color: $o-footer-muted-color !important;
+    }
+  }
+  small {
+    font-size: 90%;
+  }
+  .btn-primary {
+    color: $o-footer-primary-color;
+    background-color: $o-footer-primary-bg;
+    border-color: $o-footer-primary-bg;
+  }
+
+  // Footer widgets
+  .widget_tag_cloud li {
+    a {
+      background: $o-footer-primary-bg;
+      color: $o-footer-primary-color;
+    }
+  }
+  .widget_archive,
+  .widget_categories,
+  .widget_meta,
+  .widget_nav_menu,
+  .widget_pages,
+  .widget_recent_comments {
+    li {
+      border-bottom-color:  $o-footer-border-color;
+    }
+    ul ul {
+      border-color: $o-footer-border-color;
+    }
+  }
+}

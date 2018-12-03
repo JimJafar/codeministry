@@ -1,0 +1,9 @@
+// Buttons
+.btn {
+  text-transform: $o-btn-style;
+  font-size: $o-btn-font-size;
+  border-width: $o-btn-border-width;
+  &:focus, &:active, &:active:focus {
+    outline: none;
+  }
+}

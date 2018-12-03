@@ -1,0 +1,31 @@
+// Threaded Media
+@include media-breakpoint-down(sm) {
+  .media-left, .media-right {
+    max-width: 26px;
+  }
+  .media-body .media  {
+    margin-left: -18px;
+  }
+  .media-heading {
+    font-size: 0.75em;
+    small {
+      font-size: inherit;
+      display: block;
+      float: none !important;
+    }
+  }
+  .media-body p {
+    font-size: 0.75em;
+  }
+}
+
+.media-left, .media-right  {
+  text-align: center;
+}
+.media-body p {
+  margin-bottom: 0;
+}
+.--o--media-icon {
+  width: 2.5em;
+  font-size: 1.5em;
+}

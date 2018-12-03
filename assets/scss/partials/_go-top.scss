@@ -1,0 +1,22 @@
+.--o--go-top {
+  width: 48px;
+  height: 48px;
+  border-radius: $o-go-top-radius;
+  background-color: $o-go-top-bg;
+  color: $o-go-top-color;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  opacity: 1;
+  line-height: 48px;
+  text-align: center;
+  transition: all 1s cubic-bezier(.25,.8,.25,1);
+  z-index: $zindex-modal-bg;
+  &:active, &:focus, &:hover {
+    color: $o-go-top-color;
+  }
+  &.hide {
+    bottom: -48px;
+    opacity: 0;
+  }
+}

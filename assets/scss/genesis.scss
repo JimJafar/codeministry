@@ -1,0 +1,234 @@
+/**
+    Divinity - Church, Non Profit and Charity Events Bootstrap 4 HTML Template
+    --------------------------------------------------------------------------
+    Genesis Demo CSS
+**/
+
+
+/******************
+[Table of contents]
+
+1. Bootstrap
+2. Font Awesome
+3. Loader
+4. Sections
+5. Type
+6. Media
+7. Buttons
+8. Forms
+9. Custom forms
+10. Footer
+11. Subfooter
+12. Magnific
+13. Carousel
+14. Popover
+15. Modals
+16. Cards
+17. Tables
+18. Countdown
+19. Progress
+20. Icon Sets
+21. List Group
+22. Go To Top
+23. Widgets
+24. Utilities
+25. Navigation
+26. Panels
+27. Nav
+28. Event Table
+29. Custom Demo Backgrounds
+*******************/
+
+// Variables
+@import 'variables.scss';
+@import 'global/bootstrap-variables.scss';
+
+/*------------------------------------------------------------------
+[1. Bootstrap]
+------------------------------------------------------------------*/
+@import 'bootstrap/scss/bootstrap.scss';
+
+/*------------------------------------------------------------------
+[2. Font Awesome]
+------------------------------------------------------------------*/
+@import 'font-awesome/scss/font-awesome.scss';
+
+// Partials
+/*------------------------------------------------------------------
+[3. Loader]
+------------------------------------------------------------------*/
+@import 'partials/loader';
+/*------------------------------------------------------------------
+[4. Sections]
+------------------------------------------------------------------*/
+@import 'partials/sections';
+/*------------------------------------------------------------------
+[5. Type]
+------------------------------------------------------------------*/
+@import 'partials/type';
+/*------------------------------------------------------------------
+[6. Media]
+------------------------------------------------------------------*/
+@import 'partials/media';
+/*------------------------------------------------------------------
+[7. Buttons]
+------------------------------------------------------------------*/
+@import 'partials/buttons';
+/*------------------------------------------------------------------
+[8. Forms]
+------------------------------------------------------------------*/
+@import 'partials/forms';
+/*------------------------------------------------------------------
+[9. Custom Forms]
+------------------------------------------------------------------*/
+@import 'partials/custom-forms';
+/*------------------------------------------------------------------
+[10. Footer]
+------------------------------------------------------------------*/
+@import 'partials/footer';
+/*------------------------------------------------------------------
+[11. Subfooter]
+------------------------------------------------------------------*/
+@import 'partials/subfooter';
+/*------------------------------------------------------------------
+[12. Magnific]
+------------------------------------------------------------------*/
+@import 'partials/magnific';
+/*------------------------------------------------------------------
+[13. Carousel]
+------------------------------------------------------------------*/
+@import 'partials/carousel';
+/*------------------------------------------------------------------
+[14. Popover]
+------------------------------------------------------------------*/
+@import 'partials/popover';
+/*------------------------------------------------------------------
+[15. Modals]
+------------------------------------------------------------------*/
+@import 'partials/modals';
+/*------------------------------------------------------------------
+[16. Cards]
+------------------------------------------------------------------*/
+@import 'partials/cards';
+/*------------------------------------------------------------------
+[17. Tables]
+------------------------------------------------------------------*/
+@import 'partials/tables';
+/*------------------------------------------------------------------
+[18. Countdown]
+------------------------------------------------------------------*/
+@import 'partials/countdown';
+/*------------------------------------------------------------------
+[19. Progress]
+------------------------------------------------------------------*/
+@import 'partials/progress';
+/*------------------------------------------------------------------
+[20. Icon Sets]
+------------------------------------------------------------------*/
+@import 'partials/icon-sets';
+/*------------------------------------------------------------------
+[21. List Group]
+------------------------------------------------------------------*/
+@import 'partials/list-group';
+/*------------------------------------------------------------------
+[22. Go To Top]
+------------------------------------------------------------------*/
+@import 'partials/go-top';
+/*------------------------------------------------------------------
+[23. Widgets]
+------------------------------------------------------------------*/
+@import 'partials/widgets';
+/*------------------------------------------------------------------
+[24. Utilities]
+------------------------------------------------------------------*/
+@import 'partials/utilities';
+/*------------------------------------------------------------------
+[25. Navigation]
+------------------------------------------------------------------*/
+@import 'partials/navigation';
+/*------------------------------------------------------------------
+[26. Panels]
+------------------------------------------------------------------*/
+@import 'partials/panels';
+/*------------------------------------------------------------------
+[27. Nav]
+------------------------------------------------------------------*/
+@import 'partials/nav';
+/*------------------------------------------------------------------
+[28. Event Table]
+------------------------------------------------------------------*/
+@import 'partials/event-table';
+/*------------------------------------------------------------------
+[29. Custom Demo Backgrounds]
+------------------------------------------------------------------*/
+.--o--demo-bg-1 {
+  background: #e8e2d7;
+}
+.--o--demo-bg-2 {
+  background: #121823;
+}
+.--o--demo-bg-image-1 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-2 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-3 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-3-flipped {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-4 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-5 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-5-flipped {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-6 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-6-flipped {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-7 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-8 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-9 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-10 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-11 {
+  background-image: url(https://placehold.it/1600x1000);
+}
+.--o--demo-bg-image-11-footer {
+  background-image: url(https://placehold.it/1600x700);
+}
+.--o--demo-bg-image-12 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-13 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-14 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-15 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-16 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+.--o--demo-bg-image-17 {
+  background-image: url(https://placehold.it/1600x2000);
+}
+
+// Add your rules here
