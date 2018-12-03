@@ -1,10 +1,11 @@
 <template>
   <section class="container">
     <div>
-      <logo/>
+      <Logo />
       <hr>
       <h1>From prismic:</h1>
       <h1>{{ fields.title }}</h1>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-html="fields.content" />
       <img :src="fields.bannerImage.url">
     </div>
@@ -21,7 +22,7 @@ export default {
   components: {
     Logo
   },
-  async asyncData(context) {
+  async asyncData (context) {
     const api = await Prismic.getApi(process.env.prismicApiUrl)
     const result = await api.getSingle('home_page')
 

@@ -1,6 +1,6 @@
-# Code Ministry
+# codeministry platform 2.0
 
-> The codeministry.org web application
+> The codeministry.com platform 2018/19 rewrite
 
 ### Built with
 
@@ -31,6 +31,16 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 
 Using [prismic](https://prismic.io/) CMS
 
-Repository: [https://doerscircle.prismic.io/](https://doerscircle.prismic.io/)
+Repository: [https://codeministry.prismic.io/](https://codeministry.prismic.io/)
 
 Install the CLI: `npm install -g prismic-cli`
+
+
+## IMPORTANT
+
+This needs to stay in `package.json` [see this issue](https://github.com/dominictarr/event-stream/issues/116):
+
+    "resolutions": {
+        "**/event-stream": "3.3.4"
+      },
+      
