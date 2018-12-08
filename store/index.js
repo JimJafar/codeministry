@@ -1,13 +1,15 @@
-import Vuex from 'vuex'
+export const state = () => ({
+  redirectPath: null
+})
 
-const createStore = () => {
-  return new Vuex.Store({
-    state: () => ({ counter: 0 }),
-    mutations: {
-      increment (state) {
-        state.counter++
-      }
-    }
-  })
+export const actions = {
+  setRedirectPath (context, path) {
+    context.commit('setRedirectPath', path)
+  }
 }
-export default createStore
+
+export const mutations = {
+  setRedirectPath (state, path) {
+    state.redirectPath = path
+  }
+}

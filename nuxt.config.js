@@ -19,17 +19,26 @@ module.exports = {
   // Global CSS
   css: [],
   // Plugins to load before mounting the App
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/initialise', ssr: false },
+    { src: '~/plugins/font-awesome' }
+  ],
   // Nuxt.js modules
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
+    // https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    // Doc: https://bootstrap-vue.js.org/docs/
-    'bootstrap-vue/nuxt'
+    // https://bootstrap-vue.js.org/docs/
+    'bootstrap-vue/nuxt',
+    // https://github.com/nuxt-community/modules/tree/master/packages/toast
+    '@nuxtjs/toast'
   ],
   // Axios module configuration
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+  },
+  toast: {
+    position: 'top-right',
+    duration: 5000
   },
   // Build configuration
   build: {
@@ -47,6 +56,7 @@ module.exports = {
     }
   },
   env: {
-    prismicApiUrl: process.env.PRISMIC_API_URL || 'https://codeministry.prismic.io/api/v2'
+    prismicApiUrl: process.env.PRISMIC_API_URL || 'https://codeministry.prismic.io/api/v2',
+    environment: process.env.NODE_ENV || 'development'
   }
 }

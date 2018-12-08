@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-      <Logo />
+      <logo />
       <hr>
       <h1>From prismic:</h1>
       <h1>{{ fields.title }}</h1>
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import logo from '~/components/logo.vue'
 import Prismic from 'prismic-javascript'
 import * as PrismicDOM from 'prismic-dom'
 
 export default {
   name: 'HomePage',
   components: {
-    Logo
+    logo
   },
   async asyncData (context) {
     const api = await Prismic.getApi(process.env.prismicApiUrl)

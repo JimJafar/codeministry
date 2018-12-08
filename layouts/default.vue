@@ -1,7 +1,17 @@
 <template>
-  <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
-  <div><nuxt /></div>
+  <div>
+    <main-nav />
+    <nuxt />
+  </div>
 </template>
+
+<script>
+import MainNav from '../components/main-nav'
+
+export default {
+  components: { MainNav }
+}
+</script>
 
 <style>
 html {

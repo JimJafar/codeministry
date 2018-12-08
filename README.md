@@ -35,8 +35,14 @@ Repository: [https://codeministry.prismic.io/](https://codeministry.prismic.io/)
 
 Install the CLI: `npm install -g prismic-cli`
 
+# DEPLOYMENT
 
-## IMPORTANT
+## Environment Variables
+
+- *PRISMIC_API_URL* _The Prismic API URL - e.g._ `'https://codeministry.prismic.io/api/v2'`
+- *NODE_ENV* `test` _or_ `production`
+
+# IMPORTANT
 
 This needs to stay in `package.json` [see this issue](https://github.com/dominictarr/event-stream/issues/116):
 

@@ -1,3 +1,4 @@
+const consola = require('consola')
 const moment = require('moment')
 const authUtils = require('./utils/authUtils')
 
@@ -44,7 +45,7 @@ module.exports.plugin = {
                 response: h.response('Session expired').code(401)
               }
             } catch (err) {
-              console.log(
+              consola.log(
                 `Session could not bedeleted: ${err ? err.message : ''}`
               )
               return {
@@ -63,7 +64,7 @@ module.exports.plugin = {
             await dbSession.save()
             return { isValid: true }
           } catch (err) {
-            console.log('Session update failed: ' + (err ? err.message : ''))
+            consola.log('Session update failed: ' + (err ? err.message : ''))
             return {
               isValid: false,
               response: h.response('Session update failed').code(401)

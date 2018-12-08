@@ -1,3 +1,5 @@
+const consola = require('consola')
+
 const logTypes = { info: 1, warning: 2, error: 3 }
 module.exports.logTypes = logTypes
 
@@ -38,7 +40,7 @@ const doLog = (request, description, err, type) => {
   const identifier = module.exports.getIdentifier(request)
   const callstack = module.exports.getRelevantCallstack(err)
   const db = request.getDb()
-  console.log(
+  consola.log(
     [
       '\n/* * * * * * * * * * * * * * * * * *',
       ' * LOGGING:',
@@ -62,7 +64,7 @@ const doLog = (request, description, err, type) => {
       callstack
     })
     .catch(logErr => {
-      console.error(
+      consola.error(
         'Logging failed: ',
         logErr
           ? logErr.message + ' in' + logErr.fileName + ':' + logErr.lineNumber
