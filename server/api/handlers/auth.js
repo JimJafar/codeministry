@@ -106,8 +106,8 @@ module.exports.login = {
  */
 module.exports.logout = {
   tags: ['api'],
-  description: 'Logout a user',
-  notes: 'Logout a user',
+  description: 'Logout the current user',
+  notes: 'Logout the current user',
   validate: Object.assign({}, authRequired),
   handler: async (request, h) => {
     const db = request.getDb()

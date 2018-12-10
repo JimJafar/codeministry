@@ -526,7 +526,7 @@ module.exports.updatePrivacy = {
       payload: Joi.object({
         personaliseThirdPartyAds: Joi.boolean().required(),
         receiveThirdPartyOffers: Joi.boolean().required(),
-        receivecodeministryUpdateEmails: Joi.boolean().required()
+        receiveCodeMinistryUpdateEmails: Joi.boolean().required()
       })
     },
     authRequired
@@ -543,7 +543,7 @@ module.exports.updatePrivacy = {
     }
     user.personalise_third_party_ads = request.payload.personaliseThirdPartyAds
     user.receive_third_party_offers = request.payload.receiveThirdPartyOffers
-    user.receive_mx_update_emails = request.payload.receivecodeministryUpdateEmails
+    user.receive_mx_update_emails = request.payload.receiveCodeMinistryUpdateEmails
 
     await user.save()
     return { result: 'User privacy settings updated' }

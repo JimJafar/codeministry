@@ -36,13 +36,13 @@ export default {
     localStorage.removeItem('cmToken')
     localStorage.removeItem('cmUser')
 
-    $nuxt.$store.dispatch('auth/unauthenticate')
+    $nuxt.$store.dispatch('auth/unAuthenticate')
 
     return Api().post('/logout', null, { suppressErrors: true }) // suppress errors - user was probably already logged out
   },
 
   /**
-   * Attempts to fetch the authenticated user from the jwt
+   * Tests to see if the jwt is present and valid
    * @return {Promise<*>}
    */
   checkSession () {

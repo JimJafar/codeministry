@@ -2,8 +2,6 @@ import AuthService from '@/services/AuthService'
 
 export default {
   beforeMount: (context) => {
-    console.log('restrict client', $nuxt.$store.state.auth)
-
     if (!$nuxt.$store.state.auth.isAuthenticated) {
       // no session in vuex store
       console.warn('no session in vuex store')
@@ -17,7 +15,7 @@ export default {
 
       // load the session info from localStorage into the vuex store
       const authenticatedUser = localStorage.getItem('cmUser')
-      $nuxt.$store.dispatch('auth/loadSession', { token, authenticatedUser })
+      $nuxt.$store.dispatch('auth/loadSessionFromLocalStorage', { token, authenticatedUser })
 
       AuthService.checkSession()
         .then(() => {

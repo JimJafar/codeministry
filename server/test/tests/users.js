@@ -711,7 +711,7 @@ describe('Testing API: users handler', () => {
       payload: {
         personaliseThirdPartyAds: false,
         receiveThirdPartyOffers: false,
-        receivecodeministryUpdateEmails: false
+        receiveCodeMinistryUpdateEmails: false
       }
     }
     const response = await server.inject(options)
