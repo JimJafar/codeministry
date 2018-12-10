@@ -7,7 +7,7 @@ export default {
     if (!$nuxt.$store.state.auth.isAuthenticated) {
       // no session in vuex store
       console.warn('no session in vuex store')
-      const token = localStorage.getItem('doToken')
+      const token = localStorage.getItem('cmToken')
 
       if (!token) {
         // no session in local storage
@@ -16,7 +16,7 @@ export default {
       }
 
       // load the session info from localStorage into the vuex store
-      const authenticatedUser = localStorage.getItem('doUser')
+      const authenticatedUser = localStorage.getItem('cmUser')
       $nuxt.$store.dispatch('auth/loadSession', { token, authenticatedUser })
 
       AuthService.checkSession()

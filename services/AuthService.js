@@ -14,8 +14,8 @@ export default {
 
     try {
       response = await Api().post('/login', { email, password })
-      localStorage.setItem('doToken', response.data.token)
-      localStorage.setItem('doUser', xxtea.encrypt(JSON.stringify(response.data.user), getBrowserUid()))
+      localStorage.setItem('cmToken', response.data.token)
+      localStorage.setItem('cmUser', xxtea.encrypt(JSON.stringify(response.data.user), getBrowserUid()))
       $store.dispatch('auth/authenticate', response)
       $store.$toast.success('Logged in')
 
@@ -33,8 +33,8 @@ export default {
    * @return {Promise<*>}
    */
   logout () {
-    localStorage.removeItem('doToken')
-    localStorage.removeItem('doUser')
+    localStorage.removeItem('cmToken')
+    localStorage.removeItem('cmUser')
 
     $nuxt.$store.dispatch('auth/unauthenticate')
 
