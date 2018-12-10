@@ -32,17 +32,20 @@ export default {
    * Logs out the current user and clears session info from localStorage
    * @return {Promise<*>}
    */
-  async logout () {
+  logout () {
     localStorage.removeItem('doToken')
     localStorage.removeItem('doUser')
 
     $nuxt.$store.dispatch('auth/unauthenticate')
 
-    let response
-    try {
-      response = await Api().post('/logout', null, { suppressErrors: true })
-    } catch (e) { /* nothing to do - user was probably already logged out */ }
+    return Api().post('/logout', null, { suppressErrors: true }) // suppress errors - user was probably already logged out
+  },
 
-    return response
+  /**
+   * Attempts to fetch the authenticated user from the jwt
+   * @return {Promise<*>}
+   */
+  checkSession () {
+    return Api().get('/checkSession', { suppressErrors: true }) // suppress errors - session was just invalid
   }
 }

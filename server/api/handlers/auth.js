@@ -9,6 +9,10 @@ const cryptoUtils = require('../../utils/cryptoUtils')
 const authRequired = require('../validators/authRequired')
 const Boom = require('boom')
 
+/**
+ * Authenticate a user
+ * @type {{auth: boolean, tags: string[], description: string, notes: string, validate: {payload: *}, handler: (function(*=, *): Promise<*>)}}
+ */
 module.exports.login = {
   auth: false,
   tags: ['api'],
@@ -96,6 +100,10 @@ module.exports.login = {
   }
 }
 
+/**
+ * Logout the current user
+ * @type {{tags: string[], description: string, notes: string, validate: ({} & {headers}) | any, handler: (function(*, *): {result: string})}}
+ */
 module.exports.logout = {
   tags: ['api'],
   description: 'Logout a user',
@@ -109,5 +117,19 @@ module.exports.logout = {
       }
     })
     return { result: 'Logged out' }
+  }
+}
+
+/**
+ * A simple method that will return 403 if jwt is invalid
+ * @type {{tags: string[], description: string, notes: string, validate: ({} & {headers}) | any, handler: (function(*, *): {sessionValid: boolean})}}
+ */
+module.exports.checkSession = {
+  tags: ['api'],
+  description: 'Check if the session is valid',
+  notes: 'Check if the session is valid',
+  validate: Object.assign({}, authRequired),
+  handler: (request, h) => {
+    return { sessionValid: true }
   }
 }

@@ -16,9 +16,11 @@
 import logo from '~/components/logo.vue'
 import Prismic from 'prismic-javascript'
 import * as PrismicDOM from 'prismic-dom'
+import restrictedRouteMixin from '@/mixins/restricted-route'
 
 export default {
   name: 'HomePage',
+  mixins: [restrictedRouteMixin],
   components: {
     logo
   },

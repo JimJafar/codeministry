@@ -25,6 +25,7 @@ exports.plugin = {
       // Auth
       { method: 'POST', path: '/login', config: Auth.login },
       { method: 'POST', path: '/logout', config: Auth.logout },
+      { method: 'GET', path: '/checkSession', config: Auth.checkSession },
 
       // Users
       { method: 'GET', path: '/user/{userId}', config: Users.findById },
