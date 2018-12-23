@@ -1,7 +1,11 @@
 <template>
   <div>
+    <nuxt-link to="/">
+      Home
+    </nuxt-link>
+    <cart-indicator />
     {{ authenticatedUser.name }}
-    <a href="#" @click="logout">
+    <a @click="logout" href="#">
       logout
     </a>
   </div>
@@ -13,16 +17,16 @@ import AuthService from '@/services/AuthService'
 export default {
   name: 'MainNav',
   components: {},
-  computed: {
-    authenticatedUser () {
-      return this.$store.state.auth.authenticatedUser || {}
-    }
-  },
   methods: {
     logout () {
       event.preventDefault()
       AuthService.logout()
       $nuxt.$store.$router.push('login')
+    }
+  },
+  computed: {
+    authenticatedUser () {
+      return this.$store.state.auth.authenticatedUser || {}
     }
   }
 }

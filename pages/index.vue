@@ -22,12 +22,12 @@ export default {
   components: {
     Logo
   },
-  async asyncData () {
+  async asyncData (context) {
     const api = await Prismic.getApi(process.env.prismicApiUrl)
     const result = await api.getSingle('home_page')
 
     if (!result) {
-      this.$router.push({ name: 'not-found' })
+      return context.app.router.push({ name: 'not-found' })
     }
 
     return {
