@@ -1,6 +1,5 @@
 'use strict'
 
-process.env['MAILCHIMP_KEY'] = '49738244b33a21f4343a73d4dd6a51f6-us17'
 process.env['PRISMIC_API_URL'] = 'https://codeministry.prismic.io/api/v2'
 process.env['HAPI_HOST'] = '127.0.0.1'
 process.env['HAPI_PORT'] = 8000
