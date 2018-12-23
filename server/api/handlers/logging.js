@@ -43,7 +43,7 @@ module.exports.list = {
       include: [{
         model: db.getModel('users'),
         as: 'user',
-        attributes: ['name', 'email']
+        attributes: ['first_name', 'last_name', 'email']
       }]
     })
     logs.forEach(log => {

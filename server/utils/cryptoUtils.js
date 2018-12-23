@@ -1,11 +1,8 @@
+const config = require('../../config/server')
 const crypto = require('crypto')
-const env = process.env.NODE_ENV || 'development'
 const cryptoAlgorithm = 'aes-256-cbc'
 // AES requires 128 bits
 const ivLength = 16
-const encryptionKey = ['development', 'localtest'].includes(env)
-  ? 'tW0LKP5lg2VHVYmMLtLPNcX6DXMjXvvE'
-  : process.env.ENCRYPTION_KEY
 
 /**
  * Encrypts a string
@@ -18,7 +15,7 @@ module.exports.encryptString = (text, encoding = 'utf8') => {
     return text
   }
   const iv = crypto.randomBytes(ivLength)
-  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(encryptionKey), iv)
+  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(config.encryptionKey), iv)
 
   return `${iv.toString('hex')}:${cipher.update(text, encoding, 'hex')}${cipher.final('hex')}`
 }
@@ -37,7 +34,7 @@ module.exports.decryptString = (encrypted, encoding = 'utf8') => {
   try {
     const iv = Buffer.from(encrypted.split(':').shift(), 'hex')
     encryptedText = Buffer.from(encrypted.split(':').pop(), 'hex')
-    const decipher = crypto.createDecipheriv(cryptoAlgorithm, Buffer.from(encryptionKey), iv)
+    const decipher = crypto.createDecipheriv(cryptoAlgorithm, Buffer.from(config.encryptionKey), iv)
     decrypted = `${decipher.update(encryptedText, 'hex', encoding)}${decipher.final()}`
   } catch (err) {
     err.message = `${err.message}: "${encryptedText.toString('hex').substr(0, 100)}"...`
@@ -62,7 +59,7 @@ module.exports.encryptStringDeterministic = (text, encoding = 'utf8') => {
     .update(`mx%${text}`)
     .digest('hex')
 
-  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(encryptionKey), Buffer.from(iv, 'hex'))
+  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(config.encryptionKey), Buffer.from(iv, 'hex'))
 
   return `${iv.toString('hex')}:${cipher.update(text, encoding, 'hex')}${cipher.final('hex')}`
 }
@@ -77,7 +74,7 @@ module.exports.encryptBinary = data => {
   }
 
   const iv = crypto.randomBytes(ivLength)
-  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(encryptionKey), iv)
+  const cipher = crypto.createCipheriv(cryptoAlgorithm, Buffer.from(config.encryptionKey), iv)
 
   const update = cipher.update(data).toString('hex')
   const final = cipher.final().toString('hex')
@@ -97,7 +94,7 @@ module.exports.decryptBinary = encrypted => {
   const encoded = Buffer.from(encrypted, 'hex').toString()
   const iv = Buffer.from(encoded.split(':').shift(), 'hex')
   const encryptedData = Buffer.from(encoded.split(':').pop(), 'hex')
-  const decipher = crypto.createDecipheriv(cryptoAlgorithm, Buffer.from(encryptionKey), iv)
+  const decipher = crypto.createDecipheriv(cryptoAlgorithm, Buffer.from(config.encryptionKey), iv)
   let decrypted
   try {
     decrypted = Buffer.concat([

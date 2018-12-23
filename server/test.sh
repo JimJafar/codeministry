@@ -17,7 +17,7 @@ echo "- - - - - - - - -"
 echo "- running tests -"
 echo "- - - - - - - - -"
 
-node ./node_modules/lab/bin/lab ${TESTS} --timeout 10000 -e localtest
+node ./node_modules/lab/bin/lab ${TESTS} --timeout 10000 -e localtest -v
 
 echo "- - - - - - -"
 echo "- finished  -"

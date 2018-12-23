@@ -1,3 +1,5 @@
+import AuthService from '@/services/AuthService'
+
 /**
  * Global axios response error handler
  * To suppress error handling, do this: `Api().get('/user/1', { suppressErrors: true })`
@@ -16,7 +18,7 @@ const use = axios => {
         if (!$nuxt.$store.state.redirectPath) {
           $nuxt.$store.dispatch('setRedirectPath', $nuxt.$store.$router.curentRoute.fullPath)
         }
-        $nuxt.$store.$router.push({ path: '/logout' })
+        AuthService.logout().finally(() => $nuxt.$store.$router.push({ path: '/login' }))
       }
 
       if (error.response.status === 0) {

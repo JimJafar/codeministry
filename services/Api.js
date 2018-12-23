@@ -1,10 +1,9 @@
 import axios from 'axios'
-import config from '../config/main'
 import interceptors from './interceptors'
 
 export default () => {
   const axiosInstance = axios.create({
-    baseURL: config.apiAddress,
+    baseURL: process.env.apiAddress,
     withCredentials: false,
     headers: {
       'Accept': 'application/json',

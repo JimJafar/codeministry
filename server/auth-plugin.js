@@ -1,16 +1,16 @@
 const consola = require('consola')
 const moment = require('moment')
-const authUtils = require('./utils/authUtils')
+const config = require('../config/server')
 
 module.exports.plugin = {
   name: 'auth',
   register: (server, options) => {
     server.auth.strategy('jwt', 'jwt', {
-      key: authUtils.getJwtSecret(),
+      key: config.jwtSecret,
       verifyOptions: {
         // allow expired tokens when running automated tests
         algorithms: ['HS256'],
-        ignoreExpiration: process.env.NODE_ENV === 'localtest'
+        ignoreExpiration: config.environment === 'localtest'
       },
       validate: async (decoded, request, h) => {
         if (request.url.path === '/api/logout') {

@@ -44,7 +44,7 @@ import AuthService from '@/services/AuthService'
 
 export default {
   name: 'Login',
-  data () {
+  data (context) {
     return {
       form: {
         email: null,

@@ -16,7 +16,7 @@ export default {
       response = await Api().post('/login', { email, password })
       localStorage.setItem('cmToken', response.data.token)
       localStorage.setItem('cmUser', xxtea.encrypt(JSON.stringify(response.data.user), getBrowserUid()))
-      $store.dispatch('auth/authenticate', response)
+      $store.dispatch('auth/loadSessionFromBackend', response)
       $store.$toast.success('Logged in')
 
       const redirectPath = $store.state.redirectPath || '/products'

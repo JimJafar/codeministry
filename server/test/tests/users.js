@@ -37,7 +37,8 @@ describe('Testing API: users handler', () => {
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
     expect(response.statusCode).to.equal(200)
-    expect(payload.name).to.equal('Test User')
+    expect(payload.firstName).to.equal('Test')
+    expect(payload.lastName).to.equal('User')
     expect(payload.password).to.equal(null)
     expect(payload.hasOwnProperty('twoFactorSecret')).to.equal(false)
   })
@@ -70,7 +71,7 @@ describe('Testing API: users handler', () => {
     const payload = JSON.parse(response.payload)
     expect(response.statusCode).to.equal(200)
     expect(payload.length > 0).to.equal(true)
-    expect(payload.find(user => user.userId === constants.otherUserId).name).to.equal('Other Test User')
+    expect(payload.find(user => user.userId === constants.otherUserId).firstName).to.equal('Other')
   })
 
   it('should not list all user accounts for non-admins', async () => {
@@ -98,13 +99,12 @@ describe('Testing API: users handler', () => {
       },
       payload: {
         email: 'new@test.com',
-        mobileNumber: '95841232',
-        officeNumber: '63458998',
         password: 'letmein',
-        activated: false,
-        disabled: false,
-        name: 'A new user',
-        isAdmin: false
+        isAdmin: false,
+        firstName: 'Joe',
+        lastName: 'Bloggs',
+        nationality: 'UK',
+        country: 'SG'
       }
     }
     const response = await server.inject(options)
@@ -117,25 +117,47 @@ describe('Testing API: users handler', () => {
 
     expect(response.statusCode).to.equal(200)
     expect(payload).to.equal({
+      personaliseThirdPartyAds: true,
+      privacyPolicyAgreedVersion: null,
+      privacyPolicyAgreedVersionHistory: [],
+      receiveCodeMinistryUpdateEmails: true,
+      receiveThirdPartyOffers: true,
+      termsOfUseAgreedVersion: null,
+      termsOfUseAgreedVersionHistory: [],
+      twoFactorEnabled: false,
+      twoFactorLogin: false,
       userId: newUserId,
       email: 'new@test.com',
-      mobileNumber: '95841232',
-      officeNumber: '63458998',
       password: null,
       activated: false,
       activationCode: newUserActivationCode,
       disabled: false,
-      name: 'A new user',
       isAdmin: false,
-      twoFactorEnabled: false,
-      twoFactorLogin: false,
-      personaliseThirdPartyAds: true,
-      receiveCodeMinistryUpdateEmails: true,
-      receiveThirdPartyOffers: true,
-      privacyPolicyAgreedVersion: null,
-      termsOfUseAgreedVersion: null,
-      privacyPolicyAgreedVersionHistory: [],
-      termsOfUseAgreedVersionHistory: []
+      firstName: 'Joe',
+      lastName: 'Bloggs',
+      nationality: 'UK',
+      country: 'SG',
+      businessAddressLine1: null,
+      businessAddressLine2: null,
+      businessCity: null,
+      businessPostalCode: null,
+      businessState: null,
+      company: null,
+      dob: null,
+      facebook: null,
+      gender: null,
+      industry: null,
+      instagram: null,
+      jobTitle: null,
+      linkedin: null,
+      personalIdNumber: null,
+      phone: null,
+      profileImage: null,
+      residentialAddressLine1: null,
+      residentialAddressLine2: null,
+      residentialCity: null,
+      residentialPostalCode: null,
+      residentialState: null
     })
   })
 
@@ -149,19 +171,18 @@ describe('Testing API: users handler', () => {
       },
       payload: {
         email: 'new2@test.com',
-        mobileNumber: '95841232',
-        officeNumber: '63458998',
         password: 'letmein',
-        activated: false,
-        disabled: false,
-        name: 'Another new user',
-        isAdmin: true
+        isAdmin: true,
+        firstName: 'Admin',
+        lastName: 'Man',
+        nationality: 'UK',
+        country: 'SG'
       }
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
     expect(response.statusCode).to.equal(403)
-    expect(payload.message).to.equal('Only admins can create admins')
+    expect(payload.message).to.equal('Access denied')
   })
 
   it('should update a user', async () => {
@@ -174,14 +195,36 @@ describe('Testing API: users handler', () => {
       },
       payload: {
         userId: 'wibble', // will be ignored - just making sure the extra property doesn't cause a 400
-        email: 'edited@test.com',
-        mobileNumber: '95841239',
-        officeNumber: '63458999',
         password: 'letmein', // will be ignored - just making sure the extra property doesn't cause a 400
         activated: true, // will be ignored - just making sure the extra property doesn't cause a 400
         disabled: true, // will be ignored - just making sure the extra property doesn't cause a 400
-        name: 'An edited user',
-        isAdmin: true // will be ignored - just making sure the extra property doesn't cause a 400
+        isAdmin: true, // will be ignored - just making sure the extra property doesn't cause a 400
+        email: 'edited@test.com',
+        firstName: 'Adminny',
+        lastName: 'Manny',
+        gender: 'M',
+        dob: '1978-03-28',
+        nationality: 'SG',
+        country: 'UK',
+        phone: '+65 654321',
+        linkedin: 'https://linkedin.com/jim',
+        facebook: 'https://facebook.com/jim',
+        instagram: 'https://instagram.com/jim',
+        personalIdNumber: '12345',
+        residentialAddressLine1: '46 Blair Rd',
+        residentialAddressLine2: 'Tiong Bahru',
+        residentialCity: 'Singapore',
+        residentialState: 'Singapore',
+        residentialPostalCode: '213645',
+        profileImage: 'jim.png',
+        company: 'CodeMinistry',
+        industry: 'Doers!',
+        jobTitle: 'Doer',
+        businessAddressLine1: '46 Blair Rd',
+        businessAddressLine2: 'Tiong Bahru',
+        businessCity: 'Singapore',
+        businessState: 'Singapore',
+        businessPostalCode: '213645'
       }
     }
     const response = await server.inject(options)
@@ -193,24 +236,46 @@ describe('Testing API: users handler', () => {
     expect(response.statusCode).to.equal(200)
     expect(payload).to.equal({
       userId: newUserId,
-      email: 'edited@test.com',
-      mobileNumber: '95841239',
-      officeNumber: '63458999',
-      password: null,
       activated: false,
       activationCode: newUserActivationCode,
+      businessAddressLine1: '46 Blair Rd',
+      businessAddressLine2: 'Tiong Bahru',
+      businessCity: 'Singapore',
+      businessPostalCode: '213645',
+      businessState: 'Singapore',
+      company: 'CodeMinistry',
+      country: 'UK',
       disabled: false,
-      name: 'An edited user',
+      dob: '1978-03-28',
+      email: 'edited@test.com',
+      facebook: 'https://facebook.com/jim',
+      firstName: 'Adminny',
+      gender: 'M',
+      industry: 'Doers!',
+      instagram: 'https://instagram.com/jim',
       isAdmin: false,
-      twoFactorEnabled: false,
-      twoFactorLogin: false,
+      jobTitle: 'Doer',
+      lastName: 'Manny',
+      linkedin: 'https://linkedin.com/jim',
+      nationality: 'SG',
+      password: null,
+      personalIdNumber: '12345',
       personaliseThirdPartyAds: true,
+      phone: '+65 654321',
+      privacyPolicyAgreedVersion: null,
+      privacyPolicyAgreedVersionHistory: [],
+      profileImage: 'jim.png',
       receiveCodeMinistryUpdateEmails: true,
       receiveThirdPartyOffers: true,
-      privacyPolicyAgreedVersion: null,
+      residentialAddressLine1: '46 Blair Rd',
+      residentialAddressLine2: 'Tiong Bahru',
+      residentialCity: 'Singapore',
+      residentialPostalCode: '213645',
+      residentialState: 'Singapore',
       termsOfUseAgreedVersion: null,
-      privacyPolicyAgreedVersionHistory: [],
-      termsOfUseAgreedVersionHistory: []
+      termsOfUseAgreedVersionHistory: [],
+      twoFactorEnabled: false,
+      twoFactorLogin: false
     })
   })
 

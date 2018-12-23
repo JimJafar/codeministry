@@ -1,6 +1,8 @@
 create table sessions
 (
-  session_id varchar(36) not null primary key,
+  session_id varchar(36) not null
+    constraint sessions_pkey
+      primary key,
   user_id varchar(36) not null
     constraint sessions_users_user_id_fk
       references users

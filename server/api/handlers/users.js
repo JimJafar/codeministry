@@ -63,28 +63,35 @@ module.exports.register = {
   validate: Object.assign(
     {
       payload: Joi.object({
-        email: Joi.string()
-          .email()
-          .required(),
-        mobileNumber: Joi.string().allow(null, ''),
-        officeNumber: Joi.string().allow(null, ''),
-        password: Joi.string().allow(null),
-        activated: Joi.boolean(),
-        disabled: Joi.boolean(),
-        name: Joi.string()
-          .min(2)
-          .required(),
-        isAdmin: Joi.boolean().required()
+        isAdmin: Joi.boolean(),
+        email: Joi.string().email(),
+        password: Joi.string(),
+        firstName: Joi.string().min(2),
+        lastName: Joi.string().min(2),
+        nationality: Joi.string(),
+        country: Joi.string()
       })
     },
     authRequired
   ),
   handler: async (request, h) => {
     const newUser = request.payload
+    const encryptedEmail = cryptoUtils.encryptStringDeterministic(newUser.email)
     const password = newUser.password || utils.pseudoRandomString()
+    const userId = aguid()
+    const db = request.getDb()
 
     if (!permissionChecks.isAdmin(request) && newUser.isAdmin) {
-      throw Boom.forbidden('Only admins can create admins')
+      throw Boom.forbidden('Access denied')
+    }
+
+    const checkEmail = await await db.getModel('users').count({
+      where: {
+        email: encryptedEmail
+      }
+    })
+    if (checkEmail !== 0) {
+      throw Boom.conflict('Email already in use')
     }
 
     return new Promise((resolve, reject) => {
@@ -92,22 +99,21 @@ module.exports.register = {
         if (err) {
           return reject(Boom.internal('Hashing error'))
         }
-        const db = request.getDb()
-        const userId = aguid()
         let user
 
         try {
           user = await db.getModel('users').create({
             user_id: userId,
             email: cryptoUtils.encryptStringDeterministic(newUser.email),
-            mobile_number: newUser.mobileNumber,
-            office_number: newUser.officeNumber,
             password: hash,
-            activated: newUser.activated,
+            activated: false,
             activation_code: aguid(),
-            disabled: newUser.disabled,
-            name: newUser.name,
-            is_admin: newUser.isAdmin
+            disabled: false,
+            is_admin: newUser.isAdmin,
+            first_name: newUser.firstName,
+            last_name: newUser.lastName,
+            nationality: newUser.nationality,
+            country: newUser.country
           })
         } catch (e) {
           if (e.name === 'SequelizeUniqueConstraintError') {
@@ -131,20 +137,39 @@ module.exports.update = {
         userId: Joi.string().required()
       }),
       payload: Joi.object({
-        email: Joi.string()
-          .email()
-          .required(),
-        mobileNumber: Joi.string().allow(null, ''),
-        officeNumber: Joi.string().allow(null, ''),
-        name: Joi.string()
-          .min(2)
-          .required()
+        email: Joi.string().email(),
+        firstName: Joi.string().min(2),
+        lastName: Joi.string().min(2),
+        gender: Joi.string().allow(null, '', 'M', 'F'),
+        dob: Joi.string().allow(null, ''),
+        nationality: Joi.string().allow(null, ''),
+        country: Joi.string().allow(null, ''),
+        phone: Joi.string().allow(null, ''),
+        linkedin: Joi.string().allow(null, ''),
+        facebook: Joi.string().allow(null, ''),
+        instagram: Joi.string().allow(null, ''),
+        personalIdNumber: Joi.string().allow(null, ''),
+        residentialAddressLine1: Joi.string().allow(null, ''),
+        residentialAddressLine2: Joi.string().allow(null, ''),
+        residentialCity: Joi.string().allow(null, ''),
+        residentialState: Joi.string().allow(null, ''),
+        residentialPostalCode: Joi.string().allow(null, ''),
+        profileImage: Joi.string().allow(null, ''),
+        company: Joi.string().allow(null, ''),
+        industry: Joi.string().allow(null, ''),
+        jobTitle: Joi.string().allow(null, ''),
+        businessAddressLine1: Joi.string().allow(null, ''),
+        businessAddressLine2: Joi.string().allow(null, ''),
+        businessCity: Joi.string().allow(null, ''),
+        businessState: Joi.string().allow(null, ''),
+        businessPostalCode: Joi.string().allow(null, '')
       }).options({ allowUnknown: true })
     },
     authRequired
   ),
   handler: async (request, h) => {
     const updatedUser = request.payload
+    const encryptedEmail = cryptoUtils.encryptStringDeterministic(updatedUser.email)
 
     if (!permissionChecks.isUser(request, request.params.userId) && !permissionChecks.isAdmin(request)) {
       throw Boom.forbidden('Access denied')
@@ -156,10 +181,48 @@ module.exports.update = {
         user_id: request.params.userId
       }
     })
-    user.email = cryptoUtils.encryptStringDeterministic(updatedUser.email)
-    user.mobile_number = updatedUser.mobileNumber
-    user.office_number = updatedUser.officeNumber
-    user.name = updatedUser.name
+
+    if (!user) {
+      throw Boom.badRequest('User not found')
+    }
+
+    if (encryptedEmail !== user.email) {
+      const checkEmail = await await db.getModel('users').count({
+        where: {
+          email: encryptedEmail
+        }
+      })
+      if (checkEmail !== 0) {
+        throw Boom.conflict('Email already in use')
+      }
+    }
+
+    user.email = encryptedEmail
+    user.first_name = updatedUser.firstName
+    user.last_name = updatedUser.lastName
+    user.gender = updatedUser.gender
+    user.dob = updatedUser.dob
+    user.nationality = updatedUser.nationality
+    user.country = updatedUser.country
+    user.phone = updatedUser.phone
+    user.linkedin = updatedUser.linkedin
+    user.facebook = updatedUser.facebook
+    user.instagram = updatedUser.instagram
+    user.personal_id_number = updatedUser.personalIdNumber
+    user.residential_address_line1 = updatedUser.residentialAddressLine1
+    user.residential_address_line2 = updatedUser.residentialAddressLine2
+    user.residential_city = updatedUser.residentialCity
+    user.residential_state = updatedUser.residentialState
+    user.residential_postal_code = updatedUser.residentialPostalCode
+    user.profile_image = updatedUser.profileImage
+    user.company = updatedUser.company
+    user.industry = updatedUser.industry
+    user.job_title = updatedUser.jobTitle
+    user.business_address_line1 = updatedUser.businessAddressLine1
+    user.business_address_line2 = updatedUser.businessAddressLine2
+    user.business_city = updatedUser.businessCity
+    user.business_state = updatedUser.businessState
+    user.business_postal_code = updatedUser.businessPostalCode
 
     await user.save()
     return userUtils.sanitiseUser(user)
@@ -184,10 +247,8 @@ module.exports.changePassword = {
     authRequired
   ),
   handler: async (request, h) => {
-    if (
-      !permissionChecks.isUser(request, request.params.userId) &&
-      !permissionChecks.isAdmin(request)
-    ) {
+    if (!permissionChecks.isUser(request, request.params.userId) &&
+        !permissionChecks.isAdmin(request)) {
       throw Boom.forbidden('Access denied')
     }
 

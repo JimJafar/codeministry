@@ -55,8 +55,10 @@ module.exports = {
       }
     }
   },
+  // persist environment variables so they are accessible in the browser: https://nuxtjs.org/api/configuration-env/
   env: {
-    prismicApiUrl: process.env.PRISMIC_API_URL || 'https://codeministry.prismic.io/api/v2',
-    environment: process.env.NODE_ENV || 'development'
+    apiAddress: process.env.DO_API_ADDRESS,
+    environment: process.env.NODE_ENV,
+    prismicApiUrl: process.env.PRISMIC_API_URL
   }
 }

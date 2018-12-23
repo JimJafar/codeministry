@@ -4,13 +4,10 @@ const consola = require('consola')
 const HapiNuxt = require('hapi-nuxt')
 const Sequelize = require('sequelize')
 const path = require('path')
-const sequelizeConfig = require('./config/sequelizeConfig')
-const constants = require('./config/constants')
 const logUtil = require('./utils/logUtil')
+const config = require('../config/server')
 
 async function start () {
-  const env = process.env.NODE_ENV || 'development'
-
   const failActionHandler = async (request, h, err) => {
     consola.error(err)
     if (err.isBoom && err.output.payload.statusCode !== 401) {
@@ -30,19 +27,19 @@ async function start () {
       logUtil.error(request, [request.url.href, statusCode, errName].join(': '), error)
     }
 
-    if (err.name === 'ValidationError' && env !== 'development') {
+    if (err.name === 'ValidationError' && config.environment !== 'development') {
       err.message = err.output.payload.message = 'Invalid request payload input'
     }
     throw err
   }
 
   const server = new Hapi.Server({
-    host: process.env.HOST || '127.0.0.1',
-    port: process.env.PORT || 3000,
+    host: config.hapiHost,
+    port: config.hapiPort,
     routes: {
       cors: true,
       payload: {
-        maxBytes: constants.MAX_BYTES,
+        maxBytes: config.maxBytes,
         failAction: failActionHandler
       },
       response: {
@@ -72,9 +69,9 @@ async function start () {
       plugin: require('hapi-sequelizejs'),
       options: [
         {
-          name: 'dbname', // identifier
+          name: config.database.database, // identifier
           models: [path.join(__dirname, '/api/models/**/*.js')], // paths/globs to model files
-          sequelize: new Sequelize(sequelizeConfig.database, sequelizeConfig.username, sequelizeConfig.password, sequelizeConfig), // sequelize instance
+          sequelize: new Sequelize(config.database.database, config.database.username, config.database.password, config.database), // sequelize instance
           sync: true, // sync models - default false
           forceSync: false // force sync (drops tables) - default false
         }
@@ -96,7 +93,7 @@ async function start () {
   })
 
   // only add Swagger documentation in DEV
-  if (!process.env.PRODUCTION) {
+  if (config.environment === 'development') {
     await server.register([
       {
         plugin: require('hapi-swagger'),

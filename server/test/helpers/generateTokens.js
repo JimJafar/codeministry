@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+// NODE_ENV=localtest JWT_SECRET=Qfs7mHpMuNoUNrYIipnB8GcWiCq11iHiw4mQgzOln8ZEEP73r5HbATElIgzLz26wfzlHIg5qM6TG0QDl2l4IC1wI8Yi78/oCYCL+0VN0AWhUik+pt78WkrL2kZrHCNNNb1WY9XDD+D9AAGvtMDZ5OTGflWhNo9259glzKSMJwqkQZQveGeIfgKnT5yi6rF1C68/pmALNbtMua21w4uUDfozRYYqfrl3lC66UvYfbptqgkrrSMHYqllLIYuVYlByT7qOZi9Q3IB86CnPo6R/Bv2CQ2kGQm+1ASDrc3Cqyq37TRLoTCuWQCfTbY2JqrIRH9t4JOEXkiChiH51cF8fdmw== node ./server/test/helpers/generateTokens.js
+
 const authUtils = require('../../utils/authUtils')
 
 const adminUser = {
@@ -7,7 +9,8 @@ const adminUser = {
   password: '$2a$10$EYfAJ6Doc/CDEEDBzlFa0uKi.0DdFTeGCqrGFDt1Q3P6yI2MEr.Q6',
   activated: true,
   disabled: false,
-  name: 'Test Admin User',
+  firstName: 'Admin',
+  lastName: 'User',
   isAdmin: true
 }
 
@@ -19,7 +22,8 @@ const standardUser = {
   password: '$2a$10$EYfAJ6Doc/CDEEDBzlFa0uKi.0DdFTeGCqrGFDt1Q3P6yI2MEr.Q6',
   activated: true,
   disabled: false,
-  name: 'Test User',
+  firstName: 'Test',
+  lastName: 'User',
   isAdmin: false
 }
 
@@ -31,7 +35,8 @@ const otherUser = {
   password: '$2a$10$EYfAJ6Doc/CDEEDBzlFa0uKi.0DdFTeGCqrGFDt1Q3P6yI2MEr.Q6',
   activated: true,
   disabled: false,
-  name: 'Other Test User',
+  firstName: 'Other',
+  lastName: 'User',
   isAdmin: false
 }
 

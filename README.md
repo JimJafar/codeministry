@@ -39,8 +39,9 @@ Install the CLI: `npm install -g prismic-cli`
 
 ## Environment Variables
 
-- *PRISMIC_API_URL* _The Prismic API URL - e.g._ `'https://codeministry.prismic.io/api/v2'`
 - *NODE_ENV* `test` _or_ `production`
+- *PRISMIC_API_URL* _The Prismic API URL - e.g._ `'https://codeministry.prismic.io/api/v2'`
+- *\_AXIOS_BASE_URL\_* _The base URL for the API to be hosted on - e.g. `http://localhost:8000`_
 
 # IMPORTANT
 
