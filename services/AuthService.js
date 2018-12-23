@@ -19,7 +19,7 @@ export default {
       $store.dispatch('auth/loadSessionFromBackend', response)
       $store.$toast.success('Logged in')
 
-      const redirectPath = $store.state.redirectPath || '/products'
+      const redirectPath = $store.state.redirectPath || '/'
       $nuxt.$store.$router.push(redirectPath)
     } catch (err) {
       $store.$toast.error('Log in failed')

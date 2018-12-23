@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <div>
+    <div v-if="fields">
       <logo />
       <hr>
       <h1>From prismic:</h1>
@@ -27,7 +27,8 @@ export default {
     const result = await api.getSingle('home_page')
 
     if (!result) {
-      return context.app.router.push({ name: 'not-found' })
+      context.app.router.push({ name: 'not-found' })
+      return { fields: null }
     }
 
     return {

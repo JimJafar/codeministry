@@ -3,7 +3,6 @@
     <nuxt-link to="/">
       Home
     </nuxt-link>
-    <cart-indicator />
     {{ authenticatedUser.name }}
     <a @click="logout" href="#">
       logout
