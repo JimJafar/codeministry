@@ -2,8 +2,8 @@
 
 cross-env \
 NODE_ENV="development" \
-MAILGUN_KEY="pubkey-740753b7b94451a0dad07e4d4759baad" \
-MAILGUN_DOMAIN="https://app.mailgun.com/app/domains/sandboxf06a4add6803462493ef91f3ef9605ff.mailgun.org" \
+MAILGUN_KEY="" \
+MAILGUN_DOMAIN="" \
 PRISMIC_API_URL="https://codeministry.prismic.io/api/v2" \
 DO_API_ADDRESS="http://localhost:3000/api/" \
 HAPI_HOST="127.0.0.1" \
@@ -14,7 +14,7 @@ DB_PORT=5432 \
 DB_USER="cm_site_user" \
 DB_PASS="cm\$awesome!" \
 DB_NAME="codeministry_site" \
-ENCRYPTION_KEY="tW0LKP5lg2VHVYmMLtLPNcX6DXMjXvvE" \
-JWT_SECRET="Qfs7mHpMuNoUNrYIipnB8GcWiCq11iHiw4mQgzOln8ZEEP73r5HbATElIgzLz26wfzlHIg5qM6TG0QDl2l4IC1wI8Yi78/oCYCL+0VN0AWhUik+pt78WkrL2kZrHCNNNb1WY9XDD+D9AAGvtMDZ5OTGflWhNo9259glzKSMJwqkQZQveGeIfgKnT5yi6rF1C68/pmALNbtMua21w4uUDfozRYYqfrl3lC66UvYfbptqgkrrSMHYqllLIYuVYlByT7qOZi9Q3IB86CnPo6R/Bv2CQ2kGQm+1ASDrc3Cqyq37TRLoTCuWQCfTbY2JqrIRH9t4JOEXkiChiH51cF8fdmw==" \
+ENCRYPTION_KEY="5Y5wb0oNmsWOWyWozKYqj7CyWR3Kvb29" \
+JWT_SECRET="mByk6pq7OnsZyvhdFpFvRE7ngQDtRvp3TOUnNs/yfG9yaQryEcl6JQQEirWuUCT1KjMKQRO2cHsKzbaO218EfEpzKLLr6yedV9MOkuK0zSwSv9QW61BmbjKPaNfDCr1IGIUA/BvtEVpUe4Sn31Cb5mh1StL7R+rpuqTHdPJTku2BSVErV9QT/ujC9NYaI76k5n1pL32gQ6ieB6KEMuJOsM4OU57T83gTJhq34wJBeQYZxng6wpCpjwJEL1Lkebmq0f5ea2kqmxUUaIwiZBL2Ujb1ngNnKVVT2OLNbj/jPZcKlYlR6Vc16xvCIIB+OCRkfqSjNhhmjXR6JJ6fen7rmA==" \
 DB_LOGGING="FALSE" \
 nodemon server/index.js --watch server
