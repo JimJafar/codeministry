@@ -4,7 +4,6 @@ cross-env \
 NODE_ENV="development" \
 MAILGUN_KEY="" \
 MAILGUN_DOMAIN="" \
-PRISMIC_API_URL="https://codeministry.prismic.io/api/v2" \
 DO_API_ADDRESS="http://localhost:3000/api/" \
 HAPI_HOST="127.0.0.1" \
 HAPI_PORT=3000 \

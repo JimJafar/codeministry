@@ -11,10 +11,13 @@ const adminUser = {
   disabled: false,
   firstName: 'Admin',
   lastName: 'User',
-  isAdmin: true
+  isAdmin: true,
 }
 
-console.log('adminUser: ', authUtils.generateToken(adminUser, 'adminUserSession'))
+console.log(
+  'adminUser: ',
+  authUtils.generateToken(adminUser, 'adminUserSession')
+)
 
 const standardUser = {
   userId: 'f846ebd0-04c3-4a30-ae43-f06467b951c4',
@@ -24,10 +27,13 @@ const standardUser = {
   disabled: false,
   firstName: 'Test',
   lastName: 'User',
-  isAdmin: false
+  isAdmin: false,
 }
 
-console.log('standardUser: ', authUtils.generateToken(standardUser, 'standardUserSession'))
+console.log(
+  'standardUser: ',
+  authUtils.generateToken(standardUser, 'standardUserSession')
+)
 
 const otherUser = {
   userId: '4',
@@ -37,7 +43,10 @@ const otherUser = {
   disabled: false,
   firstName: 'Other',
   lastName: 'User',
-  isAdmin: false
+  isAdmin: false,
 }
 
-console.log('otherUser: ', authUtils.generateToken(otherUser, 'otherUserSession'))
+console.log(
+  'otherUser: ',
+  authUtils.generateToken(otherUser, 'otherUserSession')
+)

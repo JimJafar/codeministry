@@ -84,6 +84,8 @@ Run this against your local PSQL instance:
     ALTER DATABASE codeministry_site OWNER TO cm_site_user;
     ALTER DATABASE codeministry_site_test OWNER TO cm_site_user;
 
+
+
 Then run this to set up your local development DB:
 
     npm run resetdb

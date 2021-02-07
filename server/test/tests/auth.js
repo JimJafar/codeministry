@@ -1,10 +1,9 @@
 'use strict'
 
+const Code = require('@hapi/code')
+const Lab = require('@hapi/lab')
 const Helper = require('./../helpers/testhelper')
-
-const Code = require('code')
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 const describe = lab.describe
 const it = lab.it
@@ -16,10 +15,9 @@ describe('Testing API: auth handler', () => {
   let token
 
   before(() => {
-    return Helper.startServer()
-      .then(startedServer => {
-        server = startedServer
-      })
+    return Helper.startServer().then((startedServer) => {
+      server = startedServer
+    })
   })
 
   it('should login', async () => {
@@ -27,12 +25,12 @@ describe('Testing API: auth handler', () => {
       method: 'POST',
       url: '/login',
       payload: {
-        'email': 'loginTest@test.com',
-        'password': 'password'
+        email: 'loginTest@test.com',
+        password: 'password',
       },
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -51,12 +49,12 @@ describe('Testing API: auth handler', () => {
       method: 'POST',
       url: '/login',
       payload: {
-        'email': 'loginTest@test.com',
-        'password': 'passwordx'
+        email: 'loginTest@test.com',
+        password: 'passwordx',
       },
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -69,12 +67,12 @@ describe('Testing API: auth handler', () => {
       method: 'POST',
       url: '/login',
       payload: {
-        'email': 'inactive@test.com',
-        'password': 'password'
+        email: 'inactive@test.com',
+        password: 'password',
       },
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -87,12 +85,12 @@ describe('Testing API: auth handler', () => {
       method: 'POST',
       url: '/login',
       payload: {
-        'email': 'disabled@test.com',
-        'password': 'password'
+        email: 'disabled@test.com',
+        password: 'password',
       },
       headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      }
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -106,8 +104,8 @@ describe('Testing API: auth handler', () => {
       url: '/logout',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'authorization': token
-      }
+        authorization: token,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)

@@ -7,7 +7,7 @@ const utils = require('../../utils/utils')
 const twoFAUtils = require('../../utils/twoFAUtils')
 const authRequired = require('../validators/authRequired')
 const permissionChecks = require('../permissionChecks')
-const Boom = require('boom')
+const Boom = require('@hapi/boom')
 
 module.exports.findById = {
   tags: ['api'],

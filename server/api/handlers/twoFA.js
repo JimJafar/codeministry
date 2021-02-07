@@ -1,6 +1,6 @@
 const twoFAUtils = require('../../utils/twoFAUtils')
 const authRequired = require('../validators/authRequired')
-const Boom = require('boom')
+const Boom = require('@hapi/boom')
 const QRCode = require('qrcode')
 
 module.exports.generate2FASecret = {

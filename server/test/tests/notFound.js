@@ -1,9 +1,9 @@
 'use strict'
 
+const Code = require('@hapi/code')
+const Lab = require('@hapi/lab')
 const Helper = require('./../helpers/testhelper')
-const Code = require('code')
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 const describe = lab.describe
 const it = lab.it
@@ -14,10 +14,9 @@ describe('Testing API: notFound', () => {
   let server
 
   before((done) => {
-    return Helper.startServer()
-      .then(startedServer => {
-        server = startedServer
-      })
+    return Helper.startServer().then((startedServer) => {
+      server = startedServer
+    })
   })
 
   it('Unknown route should return http status 404', async () => {

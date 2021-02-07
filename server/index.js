@@ -1,14 +1,15 @@
-const Pack = require('../package')
-const Hapi = require('hapi')
-const consola = require('consola')
-const HapiNuxt = require('hapi-nuxt')
-const Sequelize = require('sequelize')
 const path = require('path')
-const logUtil = require('./utils/logUtil')
+const Hapi = require('@hapi/hapi')
+const consola = require('consola')
+const HapiNuxt = require('@nuxtjs/hapi')
+const Sequelize = require('sequelize')
+const Pack = require('../package')
 const config = require('../config/server')
+const logUtil = require('./utils/logUtil')
 
-async function start () {
-  const failActionHandler = async (request, h, err) => {
+async function start() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const failActionHandler = (request, h, err) => {
     consola.error(err)
     if (err.isBoom && err.output.payload.statusCode !== 401) {
       const errName = err.output.payload.error
@@ -24,10 +25,17 @@ async function start () {
       //   originalError: err.original
       // }
 
-      logUtil.error(request, [request.url.href, statusCode, errName].join(': '), error)
+      logUtil.error(
+        request,
+        [request.url.href, statusCode, errName].join(': '),
+        error
+      )
     }
 
-    if (err.name === 'ValidationError' && config.environment !== 'development') {
+    if (
+      err.name === 'ValidationError' &&
+      config.environment !== 'development'
+    ) {
       err.message = err.output.payload.message = 'Invalid request payload input'
     }
     throw err
@@ -40,43 +48,48 @@ async function start () {
       cors: true,
       payload: {
         maxBytes: config.maxBytes,
-        failAction: failActionHandler
+        failAction: failActionHandler,
       },
       response: {
-        failAction: failActionHandler
+        failAction: failActionHandler,
       },
       state: {
-        failAction: failActionHandler
+        failAction: failActionHandler,
       },
       validate: {
         options: {
-          allowUnknown: true
+          allowUnknown: true,
         },
-        failAction: failActionHandler
-      }
-    }
+        failAction: failActionHandler,
+      },
+    },
   })
 
   await server.register([
     { plugin: HapiNuxt },
     { plugin: require('hapi-auth-jwt2') },
-    { plugin: require('nes') },
+    { plugin: require('@hapi/nes') },
     { plugin: require('./auth-plugin') },
     { plugin: require('./api'), routes: { prefix: '/api' } },
-    { plugin: require('inert') }, // required by hapi-sequelizejs
-    { plugin: require('vision') }, // required by hapi-sequelizejs
+    // { plugin: require('inert') }, // required by hapi-sequelizejs
+    // { plugin: require('vision') }, // required by hapi-sequelizejs
     {
       plugin: require('hapi-sequelizejs'),
       options: [
         {
           name: config.database.database, // identifier
           models: [path.join(__dirname, '/api/models/**/*.js')], // paths/globs to model files
-          sequelize: new Sequelize(config.database.database, config.database.username, config.database.password, config.database), // sequelize instance
+          sequelize: new Sequelize(
+            config.database.database,
+            config.database.username,
+            config.database.password,
+            config.database
+          ), // sequelize instance
           sync: true, // sync models - default false
-          forceSync: false // force sync (drops tables) - default false
-        }
-      ]
-    }
+          forceSync: false, // force sync (drops tables) - default false
+        },
+      ],
+    },
   ])
 
   server.ext('onPreResponse', (request, h) => {
@@ -99,11 +112,11 @@ async function start () {
         plugin: require('hapi-swagger'),
         options: {
           info: {
-            'title': 'Test API Documentation',
-            'version': Pack.version
-          }
-        }
-      }
+            title: 'Test API Documentation',
+            version: Pack.version,
+          },
+        },
+      },
     ])
   }
 
@@ -111,12 +124,12 @@ async function start () {
 
   consola.ready({
     message: `Server running at: ${server.info.uri}`,
-    badge: true
+    badge: true,
   })
 
   consola.info({
     message: `Swagger API documentation available at: ${server.info.uri}/documentation`,
-    badge: true
+    badge: true,
   })
 }
 

@@ -1,12 +1,10 @@
 'use strict'
 
 const Helper = require('./../helpers/testhelper')
-const constants = require('./../helpers/constants')
-
-const Code = require('code')
-const Lab = require('lab')
+const Code = require('@hapi/code')
+const Lab = require('@hapi/lab')
 const sinon = require('sinon')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 const describe = lab.describe
 const it = lab.it
@@ -14,15 +12,15 @@ const before = lab.before
 const expect = Code.expect
 
 const twoFAUtils = require('../../utils/twoFAUtils')
+const constants = require('./../helpers/constants')
 
 describe('Testing API: users handler', () => {
   let server, newUserId, newUserActivationCode
 
   before(() => {
-    return Helper.startServer()
-      .then(startedServer => {
-        server = startedServer
-      })
+    return Helper.startServer().then((startedServer) => {
+      server = startedServer
+    })
   })
 
   it('should find a single user account', async () => {
@@ -31,8 +29,8 @@ describe('Testing API: users handler', () => {
       url: '/user/' + constants.standardUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -49,8 +47,8 @@ describe('Testing API: users handler', () => {
       url: '/user/' + constants.standardUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.otherUserToken
-      }
+        Authorization: constants.otherUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -64,14 +62,16 @@ describe('Testing API: users handler', () => {
       url: '/users',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
     expect(response.statusCode).to.equal(200)
     expect(payload.length > 0).to.equal(true)
-    expect(payload.find(user => user.userId === constants.otherUserId).firstName).to.equal('Other')
+    expect(
+      payload.find((user) => user.userId === constants.otherUserId).firstName
+    ).to.equal('Other')
   })
 
   it('should not list all user accounts for non-admins', async () => {
@@ -80,8 +80,8 @@ describe('Testing API: users handler', () => {
       url: '/users',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.otherUserToken
-      }
+        Authorization: constants.otherUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -95,7 +95,7 @@ describe('Testing API: users handler', () => {
       url: '/register',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
+        Authorization: constants.adminUserToken,
       },
       payload: {
         email: 'new@test.com',
@@ -104,8 +104,8 @@ describe('Testing API: users handler', () => {
         firstName: 'Joe',
         lastName: 'Bloggs',
         nationality: 'UK',
-        country: 'SG'
-      }
+        country: 'SG',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -157,7 +157,7 @@ describe('Testing API: users handler', () => {
       residentialAddressLine2: null,
       residentialCity: null,
       residentialPostalCode: null,
-      residentialState: null
+      residentialState: null,
     })
   })
 
@@ -167,7 +167,7 @@ describe('Testing API: users handler', () => {
       url: '/register',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         email: 'new2@test.com',
@@ -176,8 +176,8 @@ describe('Testing API: users handler', () => {
         firstName: 'Admin',
         lastName: 'Man',
         nationality: 'UK',
-        country: 'SG'
-      }
+        country: 'SG',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -191,7 +191,7 @@ describe('Testing API: users handler', () => {
       url: '/user/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
+        Authorization: constants.adminUserToken,
       },
       payload: {
         userId: 'wibble', // will be ignored - just making sure the extra property doesn't cause a 400
@@ -224,8 +224,8 @@ describe('Testing API: users handler', () => {
         businessAddressLine2: 'Tiong Bahru',
         businessCity: 'Singapore',
         businessState: 'Singapore',
-        businessPostalCode: '213645'
-      }
+        businessPostalCode: '213645',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -275,21 +275,21 @@ describe('Testing API: users handler', () => {
       termsOfUseAgreedVersion: null,
       termsOfUseAgreedVersionHistory: [],
       twoFactorEnabled: false,
-      twoFactorLogin: false
+      twoFactorLogin: false,
     })
   })
 
-  it('should change a user\'s password', async () => {
+  it("should change a user's password", async () => {
     const options = {
       method: 'PUT',
       url: '/user/password/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
+        Authorization: constants.adminUserToken,
       },
       payload: {
-        password: 'letmeinbro'
-      }
+        password: 'letmeinbro',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -298,17 +298,17 @@ describe('Testing API: users handler', () => {
     expect(payload.result).to.equal('Password changed')
   })
 
-  it('should not change a user\'s password for someone without permission', async () => {
+  it("should not change a user's password for someone without permission", async () => {
     const options = {
       method: 'PUT',
       url: '/user/password/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        password: 'letmeinbro'
-      }
+        password: 'letmeinbro',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -316,14 +316,14 @@ describe('Testing API: users handler', () => {
     expect(payload.message).to.equal('Access denied')
   })
 
-  it('should enable a user\'s account', async () => {
+  it("should enable a user's account", async () => {
     const options = {
       method: 'PUT',
       url: '/user/enable/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -332,14 +332,14 @@ describe('Testing API: users handler', () => {
     expect(payload.result).to.equal('User account enabled')
   })
 
-  it('should not enable a user\'s account for someone without permission', async () => {
+  it("should not enable a user's account for someone without permission", async () => {
     const options = {
       method: 'PUT',
       url: '/user/enable/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -347,14 +347,14 @@ describe('Testing API: users handler', () => {
     expect(payload.message).to.equal('Access denied')
   })
 
-  it('should disable a user\'s account', async () => {
+  it("should disable a user's account", async () => {
     const options = {
       method: 'PUT',
       url: '/user/disable/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -363,14 +363,14 @@ describe('Testing API: users handler', () => {
     expect(payload.result).to.equal('User account disabled')
   })
 
-  it('should not disable a user\'s account for someone without permission', async () => {
+  it("should not disable a user's account for someone without permission", async () => {
     const options = {
       method: 'PUT',
       url: '/user/disable/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -378,14 +378,14 @@ describe('Testing API: users handler', () => {
     expect(payload.message).to.equal('Access denied')
   })
 
-  it('should activate a user\'s account', async () => {
+  it("should activate a user's account", async () => {
     const options = {
       method: 'PUT',
       url: '/user/activate/' + newUserId + '/' + newUserActivationCode,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -394,14 +394,14 @@ describe('Testing API: users handler', () => {
     expect(payload.result).to.equal('User activated')
   })
 
-  it('should not activate a user\'s account that is already activated', async () => {
+  it("should not activate a user's account that is already activated", async () => {
     const options = {
       method: 'PUT',
       url: '/user/activate/' + newUserId + '/' + newUserActivationCode,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -415,8 +415,8 @@ describe('Testing API: users handler', () => {
       url: '/user/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -430,8 +430,8 @@ describe('Testing API: users handler', () => {
       url: '/user/' + newUserId,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -445,12 +445,12 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         secret: 'A super secret string',
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -469,12 +469,12 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         secret: 'A super secret string',
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -494,12 +494,12 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         secret: 'A super secret string',
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -518,11 +518,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -541,11 +541,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -564,11 +564,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disable',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -587,11 +587,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -610,11 +610,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -633,11 +633,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/enableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -656,11 +656,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -679,11 +679,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -702,11 +702,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/disableLogin',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -725,11 +725,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/verify',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -748,11 +748,11 @@ describe('Testing API: users handler', () => {
       url: '/user/2fa/verify',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
-        token: 123456
-      }
+        token: 123456,
+      },
     }
 
     const twoFAUtilsStub = sinon.stub(twoFAUtils, 'verify')
@@ -765,19 +765,19 @@ describe('Testing API: users handler', () => {
     twoFAUtilsStub.restore()
   })
 
-  it('should update a user\'s privacy preferences', async () => {
+  it("should update a user's privacy preferences", async () => {
     const options = {
       method: 'PUT',
       url: '/user/privacy',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         personaliseThirdPartyAds: false,
         receiveThirdPartyOffers: false,
-        receiveCodeMinistryUpdateEmails: false
-      }
+        receiveCodeMinistryUpdateEmails: false,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -792,8 +792,8 @@ describe('Testing API: users handler', () => {
       url: '/user/privacyPolicy/1/agree',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -806,8 +806,8 @@ describe('Testing API: users handler', () => {
       url: `/user/${constants.standardUserId}`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const checkResponse = await server.inject(checkOptions)
     const checkPayload = JSON.parse(checkResponse.payload)
@@ -821,8 +821,8 @@ describe('Testing API: users handler', () => {
       url: '/user/privacyPolicy/3/agree',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -835,15 +835,17 @@ describe('Testing API: users handler', () => {
       url: `/user/${constants.standardUserId}`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const checkResponse = await server.inject(checkOptions)
     const checkPayload = JSON.parse(checkResponse.payload)
 
     expect(checkPayload.privacyPolicyAgreedVersion).to.equal(3)
     expect(checkPayload.privacyPolicyAgreedVersionHistory.length).to.equal(1)
-    expect(checkPayload.privacyPolicyAgreedVersionHistory[0].privacyPolicyId).to.equal(3)
+    expect(
+      checkPayload.privacyPolicyAgreedVersionHistory[0].privacyPolicyId
+    ).to.equal(3)
   })
 
   it('should not allow a user to approve an outdated terms of use', async () => {
@@ -852,8 +854,8 @@ describe('Testing API: users handler', () => {
       url: '/user/termsOfUse/1/agree',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -866,8 +868,8 @@ describe('Testing API: users handler', () => {
       url: `/user/${constants.standardUserId}`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const checkResponse = await server.inject(checkOptions)
     const checkPayload = JSON.parse(checkResponse.payload)
@@ -882,8 +884,8 @@ describe('Testing API: users handler', () => {
       url: '/user/termsOfUse/3/agree',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -896,14 +898,16 @@ describe('Testing API: users handler', () => {
       url: `/user/${constants.standardUserId}`,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const checkResponse = await server.inject(checkOptions)
     const checkPayload = JSON.parse(checkResponse.payload)
 
     expect(checkPayload.termsOfUseAgreedVersion).to.equal(3)
     expect(checkPayload.termsOfUseAgreedVersionHistory.length).to.equal(1)
-    expect(checkPayload.termsOfUseAgreedVersionHistory[0].termsOfUseId).to.equal(3)
+    expect(
+      checkPayload.termsOfUseAgreedVersionHistory[0].termsOfUseId
+    ).to.equal(3)
   })
 })

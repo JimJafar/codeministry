@@ -1,45 +1,32 @@
 <template>
   <section class="container">
-    <div v-if="fields">
-      <logo />
-      <hr>
-      <h1>From prismic:</h1>
-      <h1>{{ fields.title }}</h1>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div v-html="fields.content" />
-      <img :src="fields.bannerImage.url">
-    </div>
+    <logo />
+    <hr />
+    <nuxt-content :document="page" />
   </section>
 </template>
 
 <script>
-import Logo from '~/components/logo.vue'
-import Prismic from 'prismic-javascript'
-import * as PrismicDOM from 'prismic-dom'
+import Logo from '~/components/Logo.vue'
 
 export default {
   name: 'HomePage',
   components: {
-    Logo
+    Logo,
   },
-  async asyncData (context) {
-    const api = await Prismic.getApi(process.env.prismicApiUrl)
-    const result = await api.getSingle('home_page')
-
-    if (!result) {
-      context.app.router.push({ name: 'not-found' })
-      return { fields: null }
-    }
+  async asyncData({ $content, params, error }) {
+    const slug = params.slug || 'index'
+    const page = await $content(slug)
+      .fetch()
+      .catch((err) => {
+        console.log(err);
+        error({ statusCode: 404, message: 'Page not found' })
+      })
 
     return {
-      documentId: result.id,
-      fields: {
-        title: PrismicDOM.RichText.asText(result.data.title),
-        bannerImage: result.data.banner_image,
-        content: PrismicDOM.RichText.asHtml(result.data.content)
-      }
+      page,
     }
-  }
+  },
 }
 </script>
 

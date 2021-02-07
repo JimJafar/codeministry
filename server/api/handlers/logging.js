@@ -4,7 +4,7 @@ const cryptoUtils = require('../../utils/cryptoUtils')
 const logUtil = require('../../utils/logUtil')
 const authRequired = require('../validators/authRequired')
 const permissionChecks = require('../permissionChecks')
-const Boom = require('boom')
+const Boom = require('@hapi/boom')
 
 module.exports.find = {
   tags: ['api'],

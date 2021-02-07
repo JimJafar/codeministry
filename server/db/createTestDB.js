@@ -31,15 +31,15 @@ const getConfig = () => {
       database: 'codeministry_site',
       password: 'cm$awesome!',
       host: 'localhost',
-      port: 5432
+      port: 5432,
     },
     localtest: {
       user: 'cm_site_user',
       database: 'codeministry_site_test',
       password: 'cm$awesome!',
       host: 'localhost',
-      port: 5432
-    }
+      port: 5432,
+    },
     // ,
     // test: {
     //   user: 'cm_site_user',
@@ -61,15 +61,13 @@ const queryList = [
   sessions,
   logs,
   // patches
-  patches.join('\n')
+  patches.join('\n'),
 ]
 
 switch (env) {
   case 'development':
   case 'test':
-    queryList.push(
-      testdataUsers
-    )
+    queryList.push(testdataUsers)
     break
   case 'localtest':
     queryList.push(

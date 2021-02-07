@@ -1,10 +1,9 @@
 'use strict'
 
+const Code = require('@hapi/code')
+const Lab = require('@hapi/lab')
 const cryptoUtils = require('../../utils/cryptoUtils')
-
-const Code = require('code')
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 const describe = lab.describe
 const it = lab.it

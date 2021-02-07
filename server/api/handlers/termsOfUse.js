@@ -2,7 +2,7 @@ const Joi = require('joi')
 const sqlUtils = require('../../utils/sqlUtils')
 const authRequired = require('../validators/authRequired')
 const permissionChecks = require('../permissionChecks')
-const Boom = require('boom')
+const Boom = require('@hapi/boom')
 
 module.exports.getLatest = {
   tags: ['api'],

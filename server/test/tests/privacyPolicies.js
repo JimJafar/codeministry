@@ -1,11 +1,11 @@
 'use strict'
 
+const Code = require('@hapi/code')
+const Lab = require('@hapi/lab')
 const Helper = require('./../helpers/testhelper')
 const constants = require('./../helpers/constants')
 
-const Code = require('code')
-const Lab = require('lab')
-const lab = exports.lab = Lab.script()
+const lab = (exports.lab = Lab.script())
 
 const describe = lab.describe
 const it = lab.it
@@ -16,10 +16,9 @@ describe('Testing API: privacyPolicies handler', () => {
   let server, createdPrivacyPolicyId
 
   before(() => {
-    return Helper.startServer()
-      .then(startedServer => {
-        server = startedServer
-      })
+    return Helper.startServer().then((startedServer) => {
+      server = startedServer
+    })
   })
 
   it('should not allow non-admins to add a privacy policy', async () => {
@@ -28,12 +27,12 @@ describe('Testing API: privacyPolicies handler', () => {
       url: '/privacyPolicies',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
+        Authorization: constants.standardUserToken,
       },
       payload: {
         versionNotes: 'Test version',
-        content: '<h1>Privacy Policy</h1>No cookies'
-      }
+        content: '<h1>Privacy Policy</h1>No cookies',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -48,12 +47,12 @@ describe('Testing API: privacyPolicies handler', () => {
       url: '/privacyPolicies',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
+        Authorization: constants.adminUserToken,
       },
       payload: {
         versionNotes: 'Test version',
-        content: '<h1>Privacy Policy</h1>No cookies'
-      }
+        content: '<h1>Privacy Policy</h1>No cookies',
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -72,8 +71,8 @@ describe('Testing API: privacyPolicies handler', () => {
       url: '/privacyPolicies/latest',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -91,8 +90,8 @@ describe('Testing API: privacyPolicies handler', () => {
       url: '/privacyPolicies/all',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.standardUserToken
-      }
+        Authorization: constants.standardUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
@@ -107,14 +106,16 @@ describe('Testing API: privacyPolicies handler', () => {
       url: '/privacyPolicies/all',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': constants.adminUserToken
-      }
+        Authorization: constants.adminUserToken,
+      },
     }
     const response = await server.inject(options)
     const payload = JSON.parse(response.payload)
 
     expect(response.statusCode).to.equal(200)
     expect(payload.length).to.equal(3)
-    expect(payload.map(pp => pp.privacyPolicyId).includes(createdPrivacyPolicyId)).to.equal(true)
+    expect(
+      payload.map((pp) => pp.privacyPolicyId).includes(createdPrivacyPolicyId)
+    ).to.equal(true)
   })
 })

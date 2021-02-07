@@ -7,7 +7,7 @@ const authUtils = require('../../utils/authUtils')
 const sqlUtils = require('../../utils/sqlUtils')
 const cryptoUtils = require('../../utils/cryptoUtils')
 const authRequired = require('../validators/authRequired')
-const Boom = require('boom')
+const Boom = require('@hapi/boom')
 
 /**
  * Authenticate a user
