@@ -38,7 +38,7 @@
     "hapi-sequelizejs": "^4.3.0",
     "hapi-swagger": "^14.1.0",
     "joi": "^17.4.0",
-    "nuxt": "^2.14.12",
+    "nuxt": "^2.15.3",
     "pg": "^8.5.1",
     "qrcode": "^1.4.4",
     "save-dev": "0.0.1-security",
