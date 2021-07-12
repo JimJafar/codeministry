@@ -48,7 +48,7 @@
     "xxtea": "^0.2.2"
   },
   "devDependencies": {
-    "@hapi/lab": "^24.1.0",
+    "@hapi/lab": "^24.3.0",
     "@nuxt/types": "^2.14.12",
     "@nuxt/typescript-build": "^2.0.4",
     "@nuxtjs/eslint-config-typescript": "^5.0.0",
