@@ -37,7 +37,7 @@
     "hapi-auth-jwt2": "^10.2.0",
     "hapi-sequelizejs": "^4.5.0",
     "hapi-swagger": "^14.2.4",
-    "joi": "^17.4.0",
+    "joi": "^17.4.2",
     "nuxt": "^2.15.8",
     "pg": "^8.5.1",
     "qrcode": "^1.4.4",
