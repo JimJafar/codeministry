@@ -45,7 +45,7 @@
     "sequelize": "^6.7.0",
     "sinon": "^9.2.4",
     "speakeasy": "^2.0.0",
-    "xxtea": "^0.2.2"
+    "xxtea": "^0.2.3"
   },
   "devDependencies": {
     "@hapi/lab": "^24.3.2",
