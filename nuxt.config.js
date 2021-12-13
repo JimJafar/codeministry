@@ -65,7 +65,7 @@ export default {
   },
   // persist environment variables so they are accessible in the browser: https://nuxtjs.org/api/configuration-env/
   env: {
-    apiAddress: process.env.DO_API_ADDRESS,
+    apiAddress: process.env.CM_API_ADDRESS,
     environment: process.env.NODE_ENV,
   },
 }

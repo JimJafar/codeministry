@@ -4,7 +4,7 @@ cross-env \
 NODE_ENV="development" \
 MAILGUN_KEY="" \
 MAILGUN_DOMAIN="" \
-DO_API_ADDRESS="http://localhost:3000/api/" \
+CM_API_ADDRESS="http://localhost:3000/api/" \
 HAPI_HOST="127.0.0.1" \
 HAPI_PORT=3000 \
 _AXIOS_BASE_URL_="http://localhost:8000" \
