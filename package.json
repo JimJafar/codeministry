@@ -42,7 +42,7 @@
     "pg": "^8.5.1",
     "qrcode": "^1.5.0",
     "save-dev": "0.0.1-security",
-    "sequelize": "^6.11.0",
+    "sequelize": "^6.12.4",
     "sinon": "^12.0.1",
     "speakeasy": "^2.0.0",
     "xxtea": "^0.2.3"
