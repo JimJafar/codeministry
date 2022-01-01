@@ -1,3 +1,0 @@
-# CONFIGURATION
-
-Configuration files
