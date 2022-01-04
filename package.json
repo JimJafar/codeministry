@@ -12,8 +12,8 @@
     "startFresh": "docker compose down -v && docker compose up build",
     "lint": "cd client && npm run lint && cd ../server && npm run lint",
     "testClient": "cd client && npm test",
-    "testServer": "cd ../server && npm test",
-    "testAll": "cd client && npm test -- --watchAll=false && cd ../server && npm test -- --watchAll=false",
+    "testServer": "cd server && npm test",
+    "testAll": "cd client && npm test -- --watchAll=false && cd ../server && npm test -- --watchAll=false --forceExit",
     "postinstall": "cd client && npm install && cd ../server && npm install"
   },
   "author": "",
