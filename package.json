@@ -7,7 +7,7 @@
     "prop-types": "^15.8.0"
   },
   "scripts": {
-    "auditDeps": "cd client && npm audit && cd ../server && npm audit",
+    "auditDeps": "cd client && npm audit --production && cd ../server && npm audit --production",
     "start": "docker compose up",
     "startFresh": "docker compose down -v && docker compose up build",
     "lint": "cd client && npm run lint && cd ../server && npm run lint",
