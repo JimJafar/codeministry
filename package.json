@@ -4,7 +4,7 @@
   "description": "",
   "main": "client/src/index.js",
   "dependencies": {
-    "prop-types": "^15.8.0"
+    "prop-types": "^15.8.1"
   },
   "scripts": {
     "auditDeps": "cd client && npm audit --production && cd ../server && npm audit --production",
